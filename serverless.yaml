@@ -1,0 +1,28 @@
+service: update-dashboard-filters-all-tiles
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-python-requirements
+frameworkVersion: ">=1.2.0 <2.0.0"
+
+package:
+  exclude:
+    - ./**
+  include:
+    - '*.py'
+
+custom:
+  resultTtlInSeconds: 0
+  pythonRequirements:
+    dockerizePip: non-linux
+
+provider:
+  name: aws
+  runtime: python3.7
+
+functions:
+  updateTiles:
+    handler: main.update
+    events:
+      - http:
+          path: update
+          method: get
